@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings - {{ book.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=4">
+    <script src="{{ url_for('static', path='/app.js') }}" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      {% set nav_current = 'settings' %}
+      {% include "_sidebar.html" %}
+      <main class="page page-top">
+        <section class="settings-page">
+        <div class="book-heading">
+          <div>
+            <p class="eyebrow">Translation settings</p>
+            <h1>{{ book.title }}</h1>
+          </div>
+          <a class="secondary-link" href="/books/{{ book.id }}">Back to book</a>
+        </div>
+
+        {% if saved %}
+          <div class="alert success" role="status">Settings saved.</div>
+        {% endif %}
+        {% if error %}
+          <div class="alert error" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <section class="settings-section">
+          <h2>OpenRouter access</h2>
+          <p class="section-note">
+            Your API key is used only for these OpenRouter requests and is not saved.
+          </p>
+          <div class="key-controls">
+            <label for="api-key">API key</label>
+            <input
+              id="api-key"
+              type="password"
+              autocomplete="off"
+              placeholder="sk-or-v1-..."
+              {% if settings.id %}name="api_key" form="preview-form" required{% endif %}
+            >
+            <div class="button-row">
+              <button id="test-key" type="button">Test API key</button>
+              <button id="load-models" class="secondary-button" type="button">
+                Load models
+              </button>
+            </div>
+            <p id="openrouter-status" class="request-status" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <form class="settings-section" method="post" action="/books/{{ book.id }}/settings">
+          <h2>Book configuration</h2>
+
+          <label for="model">OpenRouter model</label>
+          <select
+            id="model"
+            name="model"
+            data-selected-model="{{ settings.model }}"
+            required
+          >
+            {% if settings.model %}
+              <option value="{{ settings.model }}" selected>{{ settings.model }}</option>
+            {% else %}
+              <option value="">Load models with your API key</option>
+            {% endif %}
+          </select>
+
+          <div class="field-grid">
+            <div>
+              <label for="source-language">Source language</label>
+              <input
+                id="source-language"
+                name="source_language"
+                type="text"
+                value="{{ settings.source_language }}"
+                required
+              >
+            </div>
+            <div>
+              <label for="target-language">Target language</label>
+              <input
+                id="target-language"
+                name="target_language"
+                type="text"
+                value="{{ settings.target_language }}"
+                required
+              >
+            </div>
+          </div>
+
+          <label for="text-direction">Text direction</label>
+          <select id="text-direction" name="text_direction" required>
+            {% for value, label in [
+              ("auto-detect", "Auto-detect"),
+              ("horizontal-ltr", "Horizontal, left to right"),
+              ("horizontal-rtl", "Horizontal, right to left"),
+              ("vertical-rtl", "Vertical, right to left")
+            ] %}
+              <option value="{{ value }}" {% if settings.text_direction == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+            {% endfor %}
+          </select>
+
+          <label for="layout">Bilingual layout</label>
+          <select id="layout" name="layout" required>
+            {% for value, label in [
+              ("side-by-side", "Original left, translation right"),
+              ("original-first", "Original first, translation second"),
+              ("translation-first", "Translation first, original second")
+            ] %}
+              <option value="{{ value }}" {% if settings.layout == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+            {% endfor %}
+          </select>
+
+          <fieldset class="chapter-selection">
+            <legend>Chapters to translate</legend>
+            <div class="selection-actions">
+              <button
+                class="secondary-button"
+                id="select-all-chapters"
+                type="button"
+              >Select all</button>
+              <button
+                class="secondary-button"
+                id="clear-all-chapters"
+                type="button"
+              >Clear all</button>
+            </div>
+            <div class="chapter-options">
+              {% for chapter in chapters %}
+                <label>
+                  <input
+                    class="chapter-checkbox"
+                    name="selected_chapter_ids"
+                    type="checkbox"
+                    value="{{ chapter.id }}"
+                    {% if chapter.selected %}checked{% endif %}
+                  >
+                  <span>
+                    <strong>{{ chapter.title }}</strong>
+                    <small>{{ chapter.paragraph_count }} paragraphs</small>
+                  </span>
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+
+          <button type="submit">Save settings</button>
+        </form>
+
+        {% if settings.id %}
+          <form
+            id="preview-form"
+            class="settings-section"
+            method="post"
+            action="/jobs/{{ settings.id }}/preview"
+          >
+            <h2>Generate preview</h2>
+            <p class="section-note">
+              Preview translation uses the saved configuration above.
+            </p>
+
+            <label for="preview-scope">Preview content</label>
+            <select id="preview-scope" name="preview_scope">
+              <option value="first-3000-words">First 3,000 words</option>
+              <option value="first-10-pages">First 10 estimated pages</option>
+              <option value="first-chapter">First chapter</option>
+            </select>
+
+            <button type="submit">Generate preview</button>
+          </form>
+        {% endif %}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

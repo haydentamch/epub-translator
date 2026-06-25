@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+data/*.sqlite3
+data/exports/*
+!data/exports/.gitkeep
+data/uploads/*
+!data/uploads/.gitkeep

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preview - {{ job.book_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=4">
+  </head>
+  <body>
+    <div class="app-shell">
+      {% set nav_current = 'preview' %}
+      {% include "_sidebar.html" %}
+      <main class="page page-top">
+        <section class="preview-page">
+        <div class="book-heading">
+          <div>
+            <p class="eyebrow">Bilingual preview</p>
+            <h1>{{ job.book_title }}</h1>
+            <p class="intro">
+              {{ preview|length }} paragraphs, approximately
+              {{ "{:,}".format(preview_word_count) }} original words
+            </p>
+          </div>
+          <a class="secondary-link" href="/books/{{ job.book_id }}/settings">
+            Back to settings
+          </a>
+        </div>
+
+        <form class="start-translation" method="post" action="/jobs/{{ job.id }}/start">
+          <div>
+            <h2>Confirm full translation</h2>
+            <p class="section-note">
+              Enter your API key again to begin. It will be kept only for this running request.
+            </p>
+          </div>
+          <label for="start-api-key">OpenRouter API key</label>
+          <input
+            id="start-api-key"
+            name="api_key"
+            type="password"
+            autocomplete="off"
+            placeholder="sk-or-v1-..."
+            required
+          >
+          <button type="submit">Start full translation</button>
+        </form>
+
+        <div
+          class="preview-list layout-{{ job.layout }} direction-{{ job.text_direction }}"
+          {% if job.text_direction == "horizontal-rtl" %}dir="rtl"{% elif job.text_direction == "horizontal-ltr" %}dir="ltr"{% else %}dir="auto"{% endif %}
+        >
+          {% for paragraph in preview %}
+            <article class="preview-pair">
+              {% if job.layout == "translation-first" %}
+                <section class="preview-text translation-text">
+                  <p class="preview-label">Translation</p>
+                  <div>{{ paragraph.translated_html|safe }}</div>
+                </section>
+                <section class="preview-text original-text">
+                  <p class="preview-label">Original</p>
+                  <div>{{ paragraph.original_html|safe }}</div>
+                </section>
+              {% else %}
+                <section class="preview-text original-text">
+                  <p class="preview-label">Original</p>
+                  <div>{{ paragraph.original_html|safe }}</div>
+                </section>
+                <section class="preview-text translation-text">
+                  <p class="preview-label">Translation</p>
+                  <div>{{ paragraph.translated_html|safe }}</div>
+                </section>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>History - EPUB Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=4">
+  </head>
+  <body>
+    <div class="app-shell">
+      {% set nav_current = 'history' %}
+      {% include "_sidebar.html" %}
+      <main class="page page-top">
+        <section class="history-page">
+          <div class="book-heading">
+            <div>
+              <p class="eyebrow">Library</p>
+              <h1>History</h1>
+              <p class="intro">
+                Completed translations saved in this local database.
+              </p>
+            </div>
+            <a class="secondary-link" href="/">Upload another EPUB</a>
+          </div>
+
+          {% if history_items %}
+            <div class="history-list">
+              {% for item in history_items %}
+                <article class="history-card">
+                  <div class="history-card-main">
+                    <p class="eyebrow">{{ item.status }}</p>
+                    <h2>{{ item.book_title }}</h2>
+                    {% if item.book_author %}
+                      <p class="section-note">by {{ item.book_author }}</p>
+                    {% endif %}
+                    <dl class="history-meta">
+                      <div>
+                        <dt>Created</dt>
+                        <dd>{{ item.job_created_at }}</dd>
+                      </div>
+                      <div>
+                        <dt>Completed</dt>
+                        <dd>{{ item.completed_at or item.updated_at }}</dd>
+                      </div>
+                      <div>
+                        <dt>Target</dt>
+                        <dd>{{ item.target_language }}</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="history-actions">
+                    <a class="secondary-link" href="/jobs/{{ item.job_id }}">
+                      View job
+                    </a>
+                    <form method="post" action="/history/jobs/{{ item.job_id }}/download/bilingual">
+                      <button type="submit">
+                        Download bilingual EPUB
+                      </button>
+                    </form>
+                    <form method="post" action="/history/jobs/{{ item.job_id }}/download/translated-only">
+                      <button class="secondary-button" type="submit">
+                        Download translated-only EPUB
+                      </button>
+                    </form>
+                    <form
+                      method="post"
+                      action="/history/books/{{ item.book_id }}/delete"
+                      onsubmit="return confirm('Delete this book, its translation history, and exported EPUB files?')"
+                    >
+                      <button class="danger-button" type="submit">Delete</button>
+                    </form>
+                  </div>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <section class="empty-state">
+              <h2>No completed translations yet</h2>
+              <p class="section-note">
+                Finished EPUB translations will appear here with download and delete controls.
+              </p>
+              <a class="button-link" href="/">Upload EPUB</a>
+            </section>
+          {% endif %}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

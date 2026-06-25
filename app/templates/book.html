@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ book.title }} - EPUB Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=4">
+  </head>
+  <body>
+    <div class="app-shell">
+      {% set nav_current = 'book' %}
+      {% include "_sidebar.html" %}
+      <main class="page page-top">
+        <section class="overview">
+          <div class="book-heading">
+            <div>
+              <p class="eyebrow">Book overview</p>
+              <h1>{{ book.title }}</h1>
+              {% if book.author %}
+                <p class="intro">by {{ book.author }}</p>
+              {% else %}
+                <p class="intro">Author unavailable</p>
+              {% endif %}
+            </div>
+            <a class="secondary-link" href="/">Upload another EPUB</a>
+          </div>
+
+          <dl class="stats">
+            <div>
+              <dt>Total chapters</dt>
+              <dd>{{ total_chapters }}</dd>
+            </div>
+            <div>
+              <dt>Estimated word count</dt>
+              <dd>{{ "{:,}".format(estimated_word_count) }}</dd>
+            </div>
+            <div>
+              <dt>Source file</dt>
+              <dd>{{ book.source_filename }}</dd>
+            </div>
+          </dl>
+
+          <div class="section-heading">
+            <h2>Chapter checklist</h2>
+            {% if job and job.status in ["Translating", "Pausing", "Paused", "Completed", "CompletedWithErrors", "Failed"] %}
+              <a class="button-link" href="/jobs/{{ job.id }}">Translation progress</a>
+            {% else %}
+              <a class="button-link" href="/books/{{ book.id }}/settings">Translation settings</a>
+            {% endif %}
+          </div>
+          <ol class="chapter-list">
+            {% for chapter in chapters %}
+              <li>
+                <div>
+                  <strong>{{ chapter.title }}</strong>
+                  <span>{{ chapter.paragraph_count }} paragraphs</span>
+                </div>
+                <span class="status">{{ chapter.status }}</span>
+              </li>
+            {% endfor %}
+          </ol>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

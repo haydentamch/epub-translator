@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Translation progress - {{ progress.book_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=4">
+    <script src="{{ url_for('static', path='/app.js') }}" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      {% set nav_current = 'progress' %}
+      {% include "_sidebar.html" %}
+      <main class="page page-top">
+        <section
+          id="translation-progress"
+          class="overview"
+          data-job-id="{{ progress.job_id }}"
+        >
+        <div class="book-heading">
+          <div>
+            <p class="eyebrow">Translation progress</p>
+            <h1>{{ progress.book_title }}</h1>
+            <p id="job-status" class="intro">{{ progress.status }}</p>
+          </div>
+          <a class="secondary-link" href="/books/{{ progress.book_id }}">
+            Back to book
+          </a>
+        </div>
+
+        <section class="progress-summary">
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="Translation progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="{{ progress.progress_percent }}"
+          >
+            <div
+              id="progress-fill"
+              class="progress-fill"
+              style="width: {{ progress.progress_percent }}%"
+            ></div>
+          </div>
+          <p id="progress-copy">
+            {{ progress.completed_paragraphs }} of
+            {{ progress.total_paragraphs }} paragraphs completed
+            ({{ progress.progress_percent }}%)
+          </p>
+          <p id="chapter-summary">
+            {{ progress.completed_chapters }} completed,
+            {{ progress.partial_chapters }} partial,
+            {{ progress.failed_chapters }} failed,
+            {{ progress.skipped_chapters }} skipped chapters
+          </p>
+          <p>
+            Translation time:
+            <strong
+              id="elapsed-time"
+              data-elapsed-seconds="{{ progress.elapsed_seconds }}"
+            >00:00:00</strong>
+          </p>
+        </section>
+
+        <section
+          id="pause-resume-panel"
+          class="pause-resume-panel"
+          {% if progress.status not in ["Translating", "Pausing", "Paused"] %}hidden{% endif %}
+        >
+          <form
+            id="pause-form"
+            method="post"
+            action="/jobs/{{ progress.job_id }}/pause"
+            {% if progress.status != "Translating" %}hidden{% endif %}
+          >
+            <div>
+              <h2>Pause translation</h2>
+              <p class="section-note">
+                The current API batch will finish and be saved before pausing.
+              </p>
+            </div>
+            <button class="danger-button" type="submit">Pause translation</button>
+          </form>
+
+          <div
+            id="pausing-message"
+            {% if progress.status != "Pausing" %}hidden{% endif %}
+          >
+            <h2>Pausing translation</h2>
+            <p class="section-note">
+              Waiting for the current API batch to finish safely.
+            </p>
+          </div>
+
+          <form
+            id="resume-form"
+            method="post"
+            action="/jobs/{{ progress.job_id }}/resume"
+            {% if progress.status != "Paused" %}hidden{% endif %}
+          >
+            <div>
+              <h2>Resume translation</h2>
+              <p class="section-note">
+                Continue from the next unfinished paragraph.
+              </p>
+            </div>
+            <label for="resume-api-key">OpenRouter API key</label>
+            <input
+              id="resume-api-key"
+              name="api_key"
+              type="password"
+              autocomplete="off"
+              placeholder="sk-or-v1-..."
+              required
+            >
+            <button type="submit">Resume translation</button>
+          </form>
+        </section>
+
+        <form
+          id="retry-failed-form"
+          class="retry-panel"
+          method="post"
+          action="/jobs/{{ progress.job_id }}/retry-failed"
+          {% if progress.status not in ["CompletedWithErrors", "Failed"] %}hidden{% endif %}
+        >
+          <div>
+            <h2>Retry failed chapters</h2>
+            <p class="section-note">
+              Completed chapters and paragraphs will not be translated again.
+            </p>
+          </div>
+          <label for="retry-api-key">OpenRouter API key</label>
+          <input
+            id="retry-api-key"
+            name="api_key"
+            type="password"
+            autocomplete="off"
+            placeholder="sk-or-v1-..."
+            required
+          >
+          <button type="submit">Retry failed chapters</button>
+        </form>
+
+        <section
+          id="export-panel"
+          class="export-panel"
+          {% if progress.status not in ["Completed", "CompletedWithErrors"] %}hidden{% endif %}
+        >
+          <div>
+            <h2>Export EPUB</h2>
+            <p class="section-note">
+              Failed paragraphs keep their original text with a warning.
+            </p>
+          </div>
+          <div class="button-row">
+            <form method="post" action="/jobs/{{ progress.job_id }}/export/bilingual">
+              <button type="submit">Download bilingual EPUB</button>
+            </form>
+            <form method="post" action="/jobs/{{ progress.job_id }}/export/translated-only">
+              <button class="secondary-button" type="submit">
+                Download translated-only EPUB
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <h2>Chapter checklist</h2>
+        <ol id="progress-chapters" class="chapter-list">
+          {% for chapter in progress.chapters %}
+            <li data-chapter-id="{{ chapter.id }}">
+              <div>
+                <strong>{{ chapter.title }}</strong>
+                <span class="chapter-progress">
+                  {{ chapter.completed_paragraphs or 0 }} of
+                  {{ chapter.paragraph_count }} paragraphs
+                </span>
+              </div>
+              <span class="status status-{{ chapter.status|lower }}">
+                {{ chapter.status }}
+              </span>
+            </li>
+          {% endfor %}
+        </ol>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

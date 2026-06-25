@@ -1,0 +1,84 @@
+{% set nav_book_id = none %}
+{% set nav_job_id = none %}
+
+{% if book is defined %}
+  {% set nav_book_id = book.id %}
+{% endif %}
+{% if job is defined %}
+  {% set nav_book_id = job.book_id %}
+  {% set nav_job_id = job.id %}
+{% endif %}
+{% if progress is defined %}
+  {% set nav_book_id = progress.book_id %}
+  {% set nav_job_id = progress.job_id %}
+{% endif %}
+{% if settings is defined and settings.id %}
+  {% set nav_job_id = settings.id %}
+{% endif %}
+
+<aside class="phase-sidebar" aria-label="Translation phases">
+  <a class="phase-brand" href="/">
+    <span>EPUB</span>
+    <strong>Translator</strong>
+  </a>
+
+  <nav class="phase-nav">
+    <a class="phase-link {% if nav_current == 'history' %}active{% endif %}" href="/history">
+      <span>Library</span>
+      <strong>History</strong>
+    </a>
+
+    <a class="phase-link {% if nav_current == 'upload' %}active{% endif %}" href="/">
+      <span>Phase 1</span>
+      <strong>Upload EPUB</strong>
+    </a>
+
+    {% if nav_book_id %}
+      <a class="phase-link {% if nav_current == 'book' %}active{% endif %}" href="/books/{{ nav_book_id }}">
+        <span>Phase 2</span>
+        <strong>Book overview</strong>
+      </a>
+      <a class="phase-link {% if nav_current == 'settings' %}active{% endif %}" href="/books/{{ nav_book_id }}/settings">
+        <span>Phase 3</span>
+        <strong>Settings</strong>
+      </a>
+      <a class="phase-link {% if nav_current == 'preview' %}active{% endif %}" href="/books/{{ nav_book_id }}/settings#preview-form">
+        <span>Phase 4</span>
+        <strong>Preview</strong>
+      </a>
+    {% else %}
+      <span class="phase-link disabled">
+        <span>Phase 2</span>
+        <strong>Book overview</strong>
+      </span>
+      <span class="phase-link disabled">
+        <span>Phase 3</span>
+        <strong>Settings</strong>
+      </span>
+      <span class="phase-link disabled">
+        <span>Phase 4</span>
+        <strong>Preview</strong>
+      </span>
+    {% endif %}
+
+    {% if nav_job_id %}
+      <a class="phase-link {% if nav_current == 'progress' %}active{% endif %}" href="/jobs/{{ nav_job_id }}">
+        <span>Phase 5</span>
+        <strong>Translation</strong>
+      </a>
+      <a class="phase-link {% if nav_current == 'export' %}active{% endif %}" href="/jobs/{{ nav_job_id }}#export-panel">
+        <span>Phase 6</span>
+        <strong>Export EPUB</strong>
+      </a>
+    {% else %}
+      <span class="phase-link disabled">
+        <span>Phase 5</span>
+        <strong>Translation</strong>
+      </span>
+      <span class="phase-link disabled">
+        <span>Phase 6</span>
+        <strong>Export EPUB</strong>
+      </span>
+    {% endif %}
+  </nav>
+</aside>
