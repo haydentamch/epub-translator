@@ -1,4 +1,129 @@
-git clone https://github.com/haydentamch/epub-translator.git <br>
-cd epub-translator <br>
-docker compose up --build <br>
+# EPUB Translator
+
+A local web app for translating EPUB books with OpenRouter models. It lets you upload an EPUB, choose translation settings, preview the first part of the book, translate selected chapters, pause and resume translation, export bilingual or translated-only EPUB files, and manage completed books from a History page.
+
+## Features
+
+- Upload and parse EPUB files locally
+- Configure source language, target language, OpenRouter model, text direction, and bilingual layout
+- Select which chapters should be translated
+- Generate a preview before starting the full translation
+- Start, pause, resume, and retry translation jobs
+- Track translation progress and elapsed translation time
+- Export bilingual EPUB and translated-only EPUB
+- History page for completed translations with download and delete buttons
+- Local SQLite database storage
+
+## Requirements
+
+- Docker Desktop
+- An OpenRouter API key
+
+You do not need to install Python or create a `.venv` if you run the app with Docker.
+
+## Quick Start
+
+Clone the repository:
+
+```powershell
+git clone https://github.com/haydentamch/epub-translator.git
+cd epub-translator
+```
+
+Start the app:
+
+```powershell
+docker compose up --build
+```
+
+Open the app in your browser:
+
+```text
 http://localhost:8000
+```
+
+To stop the app, press `Ctrl+C` in the terminal. If it is running in the background, use:
+
+```powershell
+docker compose down
+```
+
+## How To Use
+
+1. Open `http://localhost:8000`.
+2. Upload an `.epub` file.
+3. Go to the settings page.
+4. Enter your OpenRouter API key.
+5. Load models and choose a model.
+6. Set the source language and target language.
+7. Select the chapters you want to translate.
+8. Save settings.
+9. Generate a preview.
+10. Start the full translation.
+11. When translation is complete, download the bilingual or translated-only EPUB.
+
+## Data Storage
+
+The app stores local data in the `data` folder:
+
+```text
+data/epub_translator.sqlite3
+data/uploads/
+data/exports/
+```
+
+These files are created automatically when the app runs.
+
+The `data` folder may contain private books, translations, and translation history. These files are ignored by Git and should not be uploaded to GitHub.
+
+## OpenRouter API Key
+
+Your OpenRouter API key is used only for requests made while using the app. It is not saved in the database.
+
+Each user should use their own OpenRouter API key.
+
+## Exported EPUB Files
+
+After translation finishes, you can export:
+
+- Bilingual EPUB: original text and translated text
+- Translated-only EPUB: translated text only
+
+The History page also lets you download previous completed translations.
+
+## Development
+
+Run tests locally if you have Python dependencies installed:
+
+```powershell
+.venv\Scripts\python.exe -m pytest -q
+```
+
+Or run inside your own Python environment:
+
+```powershell
+python -m pytest -q
+```
+
+## Privacy Notes
+
+Do not commit or upload these files:
+
+```text
+data/epub_translator.sqlite3
+data/uploads/*.epub
+data/exports/*.epub
+.venv/
+```
+
+The repository should include only the app source code, tests, Docker files, and empty `.gitkeep` files for the data folders.
+
+## Troubleshooting
+
+If port `8000` is already in use, stop the other app or change the port in `docker-compose.yml`.
+
+If Docker does not start, make sure Docker Desktop is running.
+
+If a translation is slow, try a faster OpenRouter model or select fewer chapters.
+
+If an export does not appear in Apple Books as a separate book, export both versions from the app again. The app writes separate EPUB metadata for bilingual and translated-only files.
