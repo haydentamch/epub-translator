@@ -2,6 +2,8 @@
 
 A local web app for translating EPUB books with OpenRouter models. It lets you upload an EPUB, choose translation settings, preview the first part of the book, translate selected chapters, pause and resume translation, export bilingual or translated-only EPUB files, and manage completed books from a History page.
 
+<img width="1575" height="847" alt="main_page" src="https://github.com/user-attachments/assets/621690a4-91a7-48e6-82e8-9ebf03edc4a4" />
+
 ## Features
 
 - Upload and parse EPUB files locally
@@ -61,6 +63,11 @@ docker compose down
 9. Generate a preview.
 10. Start the full translation.
 11. When translation is complete, download the bilingual or translated-only EPUB.
+
+<img width="1506" height="902" alt="setting" src="https://github.com/user-attachments/assets/241f1595-b9a3-4b35-9764-1dad3718c301" />
+<img width="1543" height="373" alt="gen_preview" src="https://github.com/user-attachments/assets/dee3c172-0111-464d-8c0d-ce5eb745c980" />
+<img width="1620" height="807" alt="preview_para" src="https://github.com/user-attachments/assets/7feb5fdb-8ba1-4793-850a-70fb43924d07" />
+<img width="1603" height="843" alt="translating" src="https://github.com/user-attachments/assets/9f7835b2-898d-4389-a14b-e0ec7aa10ac8" />
 
 ## Data Storage
 
