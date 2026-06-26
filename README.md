@@ -68,6 +68,8 @@ docker compose down
 <img width="1543" height="373" alt="gen_preview" src="https://github.com/user-attachments/assets/dee3c172-0111-464d-8c0d-ce5eb745c980" />
 <img width="1620" height="807" alt="preview_para" src="https://github.com/user-attachments/assets/7feb5fdb-8ba1-4793-850a-70fb43924d07" />
 <img width="1603" height="843" alt="translating" src="https://github.com/user-attachments/assets/9f7835b2-898d-4389-a14b-e0ec7aa10ac8" />
+<img width="1625" height="842" alt="translation completed" src="https://github.com/user-attachments/assets/d9a1d8e6-90a9-4c2a-8d2c-34f92acd0605" />
+<img width="1623" height="466" alt="history" src="https://github.com/user-attachments/assets/781a2543-def9-4723-916d-2298bc2debd8" />
 
 ## Data Storage
 
