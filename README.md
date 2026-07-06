@@ -2,6 +2,8 @@
 
 A local web app for translating EPUB books with OpenRouter models. It lets you upload an EPUB, choose translation settings, preview the first part of the book, translate selected chapters, pause and resume translation, export bilingual or translated-only EPUB files, and manage completed books from a History page.
 
+⚠ Disclaimer: The usage of this tool must comply with copyright laws. Ensure you have the necessary rights to translate and distribute EPUB content. The authors and developers of epub Translator are not responsible for any copyright violations arising from its use.
+
 <img width="1575" height="847" alt="main_page" src="https://github.com/user-attachments/assets/621690a4-91a7-48e6-82e8-9ebf03edc4a4" />
 
 ## Features
@@ -136,3 +138,6 @@ If Docker does not start, make sure Docker Desktop is running.
 If a translation is slow, try a faster OpenRouter model or select fewer chapters.
 
 If an export does not appear in Apple Books as a separate book, export both versions from the app again. The app writes separate EPUB metadata for bilingual and translated-only files.
+
+## Legal & Copyright Considerations
+⚠ Users must ensure they have legal rights to translate and modify EPUB files. Some books may be protected under copyright law, and unauthorized translation/distribution may violate regulations. This software is provided for legal and ethical use only.
