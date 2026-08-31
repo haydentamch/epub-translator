@@ -1,20 +1,1288 @@
-  <h2>Open Source</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <p>
-    EPUB Translator is available on GitHub. Contributions, bug reports,
-    feature requests, and feedback are welcome.
-  </p>
+  <title>EPUB Translator — AI Ebook Translation with OpenRouter</title>
 
-  <p>
-    <a href="https://github.com/haydentamch/epub-translator">
-      github.com/haydentamch/epub-translator
-    </a>
-  </p>
+  <meta
+    name="description"
+    content="EPUB Translator is an open-source AI EPUB translator powered by OpenRouter LLMs. Translate ebooks into bilingual or translated-only EPUB files with chapter selection, preview, pause/resume and Docker support."
+  />
 
+  <meta
+    name="keywords"
+    content="EPUB translator, AI EPUB translator, ebook translator, OpenRouter, LLM translation, bilingual EPUB, AI ebook translation, Docker"
+  />
+
+  <meta name="author" content="haydentamch" />
+
+  <link
+    rel="canonical"
+    href="https://haydentamch.github.io/epub-translator/"
+  />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="EPUB Translator — AI Ebook Translation with OpenRouter" />
+  <meta
+    property="og:description"
+    content="Translate EPUB ebooks with AI models through OpenRouter. Create bilingual or translated-only EPUB files locally."
+  />
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:url"
+    content="https://haydentamch.github.io/epub-translator/"
+  />
+
+  <style>
+    :root {
+      --bg: #080b14;
+      --bg-soft: #0e1323;
+      --card: rgba(20, 27, 48, 0.72);
+      --card-hover: rgba(27, 36, 64, 0.92);
+
+      --text: #f5f7ff;
+      --muted: #a8b0c5;
+
+      --blue: #6d7cff;
+      --purple: #a663ff;
+      --cyan: #57d7ff;
+      --green: #65e6a8;
+
+      --border: rgba(255, 255, 255, 0.09);
+
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 15% 5%,
+          rgba(109, 124, 255, 0.18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 85% 15%,
+          rgba(166, 99, 255, 0.14),
+          transparent 38%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* ---------------- NAV ---------------- */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      backdrop-filter: blur(16px);
+
+      background: rgba(8, 11, 20, 0.72);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      font-weight: 750;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
+
+      font-size: 20px;
+
+      box-shadow:
+        0 10px 35px rgba(109, 124, 255, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-github {
+      padding: 9px 15px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      color: white !important;
+
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* ---------------- HERO ---------------- */
+
+    .hero {
+      padding: 110px 0 85px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 7px 13px;
+
+      border: 1px solid rgba(109, 124, 255, 0.3);
+      border-radius: 999px;
+
+      background: rgba(109, 124, 255, 0.09);
+
+      color: #c8ceff;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      margin-bottom: 28px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+
+      background: var(--green);
+      border-radius: 999px;
+
+      box-shadow:
+        0 0 14px rgba(101, 230, 168, 0.9);
+    }
+
+    h1 {
+      max-width: 920px;
+      margin: 0 auto;
+
+      font-size: clamp(48px, 7vw, 84px);
+      line-height: 1.02;
+
+      letter-spacing: -0.055em;
+    }
+
+    .gradient-text {
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff 5%,
+          #9faaff 45%,
+          #bb79ff 75%,
+          #65ddff
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+    }
+
+    .hero-description {
+      max-width: 710px;
+      margin: 28px auto 0;
+
+      color: var(--muted);
+
+      font-size: 19px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      margin-top: 38px;
+
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      gap: 13px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 48px;
+
+      padding: 0 21px;
+
+      border-radius: 10px;
+
+      text-decoration: none;
+
+      font-size: 15px;
+      font-weight: 650;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
+
+      box-shadow:
+        0 12px 38px rgba(109, 124, 255, 0.25);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+
+      border: 1px solid var(--border);
+    }
+
+    /* ---------------- APP MOCKUP ---------------- */
+
+    .app-preview {
+      max-width: 970px;
+
+      margin: 78px auto 0;
+
+      padding: 1px;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(109,124,255,.45),
+          rgba(166,99,255,.15),
+          rgba(87,215,255,.25)
+        );
+
+      box-shadow:
+        0 50px 110px rgba(0,0,0,.45);
+    }
+
+    .app-window {
+      overflow: hidden;
+
+      border-radius: 17px;
+
+      background: #0c1120;
+    }
+
+    .window-bar {
+      height: 48px;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 0 17px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .window-dot {
+      width: 10px;
+      height: 10px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,.15);
+    }
+
+    .window-title {
+      margin-left: 10px;
+
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .app-content {
+      padding: 38px;
+
+      display: grid;
+      grid-template-columns: 220px 1fr;
+
+      gap: 30px;
+
+      text-align: left;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .sidebar-item {
+      padding: 10px 13px;
+
+      border-radius: 8px;
+
+      color: #9099af;
+
+      font-size: 13px;
+    }
+
+    .sidebar-item.active {
+      background: rgba(109,124,255,.12);
+      color: #c9ceff;
+    }
+
+    .mock-panel {
+      padding: 24px;
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.025);
+    }
+
+    .mock-title {
+      font-size: 17px;
+      font-weight: 650;
+
+      margin-bottom: 18px;
+    }
+
+    .mock-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 14px;
+
+      margin-bottom: 14px;
+    }
+
+    .mock-input {
+      height: 42px;
+
+      border-radius: 8px;
+      border: 1px solid var(--border);
+
+      background: #0a0e1a;
+
+      display: flex;
+      align-items: center;
+
+      padding: 0 13px;
+
+      color: #919aaf;
+
+      font-size: 12px;
+    }
+
+    .mock-button {
+      margin-top: 18px;
+
+      width: 150px;
+      height: 39px;
+
+      border-radius: 8px;
+
+      display: grid;
+      place-items: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
+
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    /* ---------------- SECTIONS ---------------- */
+
+    section {
+      padding: 95px 0;
+    }
+
+    .section-header {
+      text-align: center;
+
+      max-width: 700px;
+      margin: 0 auto 55px;
+    }
+
+    .section-label {
+      color: #9ba6ff;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(34px, 4vw, 49px);
+
+      line-height: 1.12;
+
+      letter-spacing: -0.035em;
+    }
+
+    .section-description {
+      margin-top: 15px;
+
+      color: var(--muted);
+
+      font-size: 17px;
+    }
+
+    /* ---------------- FEATURES ---------------- */
+
+    .features {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 18px;
+    }
+
+    .feature-card {
+      min-height: 210px;
+
+      padding: 26px;
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      background: var(--card);
+
+      transition:
+        transform .25s,
+        background .25s,
+        border-color .25s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+
+      background: var(--card-hover);
+
+      border-color:
+        rgba(109,124,255,.25);
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 19px;
+
+      border-radius: 10px;
+
+      background:
+        rgba(109,124,255,.12);
+
+      font-size: 19px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+
+      margin-bottom: 9px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ---------------- WORKFLOW ---------------- */
+
+    .workflow {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 14px;
+    }
+
+    .step {
+      padding: 23px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background:
+        rgba(255,255,255,.025);
+    }
+
+    .step-number {
+      color: #9ca7ff;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      margin-bottom: 10px;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+
+      font-size: 16px;
+    }
+
+    .step p {
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    /* ---------------- TECHNOLOGY ---------------- */
+
+    .tech-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      gap: 12px;
+    }
+
+    .tech {
+      padding: 10px 16px;
+
+      border: 1px solid var(--border);
+      border-radius: 999px;
+
+      background:
+        rgba(255,255,255,.035);
+
+      color: #bec5d8;
+
+      font-size: 13px;
+    }
+
+    /* ---------------- CTA ---------------- */
+
+    .cta {
+      margin: 50px auto 90px;
+
+      padding: 65px 30px;
+
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      text-align: center;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(109,124,255,.18),
+          transparent 55%
+        ),
+        rgba(255,255,255,.025);
+    }
+
+    .cta h2 {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cta p {
+      max-width: 600px;
+
+      margin: 18px auto 0;
+
+      color: var(--muted);
+    }
+
+    /* ---------------- FOOTER ---------------- */
+
+    footer {
+      padding: 35px 0 45px;
+
+      border-top: 1px solid var(--border);
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+
+    @media (max-width: 900px) {
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .workflow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .app-content {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+    }
+
+    @media (max-width: 620px) {
+
+      .nav-links a:not(.nav-github) {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 80px;
+      }
+
+      h1 {
+        font-size: 49px;
+      }
+
+      .hero-description {
+        font-size: 17px;
+      }
+
+      .features,
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+
+      .mock-row {
+        grid-template-columns: 1fr;
+      }
+
+      .app-content {
+        padding: 22px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+
+  <nav>
+    <div class="container nav-inner">
+
+      <a class="brand" href="#">
+        <div class="logo">📖</div>
+        EPUB Translator
+      </a>
+
+      <div class="nav-links">
+
+        <a href="#features">Features</a>
+
+        <a href="#workflow">How it works</a>
+
+        <a href="#technology">Technology</a>
+
+        <a
+          class="nav-github"
+          href="https://github.com/haydentamch/epub-translator"
+          target="_blank"
+        >
+          GitHub ↗
+        </a>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+
+  <main>
+
+    <div class="container hero">
+
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Open-source AI ebook translator
+      </div>
+
+      <h1>
+        Translate EPUB books
+        <span class="gradient-text">
+          with modern AI.
+        </span>
+      </h1>
+
+      <p class="hero-description">
+
+        EPUB Translator is a local web application for
+        translating ebooks with AI models available through
+        OpenRouter.
+
+        Translate complete books or selected chapters and
+        export bilingual or translated-only EPUB files.
+
+      </p>
+
+      <div class="hero-buttons">
+
+        <a
+          class="btn btn-primary"
+          href="https://github.com/haydentamch/epub-translator"
+          target="_blank"
+        >
+          View on GitHub →
+        </a>
+
+        <a
+          class="btn btn-secondary"
+          href="https://github.com/haydentamch/epub-translator/releases/latest"
+          target="_blank"
+        >
+          Download Latest Release
+        </a>
+
+      </div>
+
+
+      <!-- APP MOCKUP -->
+
+      <div class="app-preview">
+
+        <div class="app-window">
+
+          <div class="window-bar">
+
+            <span class="window-dot"></span>
+            <span class="window-dot"></span>
+            <span class="window-dot"></span>
+
+            <span class="window-title">
+              EPUB Translator
+            </span>
+
+          </div>
+
+
+          <div class="app-content">
+
+            <div class="sidebar">
+
+              <div class="sidebar-item active">
+                ✦ Translate
+              </div>
+
+              <div class="sidebar-item">
+                ◷ History
+              </div>
+
+              <div class="sidebar-item">
+                ⚙ Settings
+              </div>
+
+            </div>
+
+
+            <div class="mock-panel">
+
+              <div class="mock-title">
+                Translate an EPUB
+              </div>
+
+
+              <div class="mock-row">
+
+                <div class="mock-input">
+                  Source language · English
+                </div>
+
+                <div class="mock-input">
+                  Target language · Chinese
+                </div>
+
+              </div>
+
+
+              <div class="mock-input">
+                Model · OpenRouter AI model
+              </div>
+
+
+              <div class="mock-button">
+                Start Translation
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <section id="features">
+
+      <div class="container">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            Features
+          </div>
+
+          <h2>
+            Everything needed for AI EPUB translation.
+          </h2>
+
+          <p class="section-description">
+            A simple workflow for translating complete ebooks
+            without manually extracting, translating and
+            rebuilding EPUB files.
+          </p>
+
+        </div>
+
+
+        <div class="features">
+
+          <div class="feature-card">
+
+            <div class="feature-icon">🤖</div>
+
+            <h3>OpenRouter LLMs</h3>
+
+            <p>
+              Translate ebooks using modern AI models
+              available through the OpenRouter API.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">📚</div>
+
+            <h3>Chapter Selection</h3>
+
+            <p>
+              Translate an entire EPUB book or select only
+              the chapters you need.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">🔍</div>
+
+            <h3>Translation Preview</h3>
+
+            <p>
+              Preview translated text before committing to a
+              complete ebook translation.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">📖</div>
+
+            <h3>Bilingual EPUB</h3>
+
+            <p>
+              Export an EPUB containing both original and
+              translated text for comparison or language
+              learning.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">⏯</div>
+
+            <h3>Pause & Resume</h3>
+
+            <p>
+              Pause long-running translation jobs and resume
+              them later without restarting the entire book.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">🐳</div>
+
+            <h3>Docker Ready</h3>
+
+            <p>
+              Run EPUB Translator locally with a clean,
+              reproducible Docker deployment.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- WORKFLOW -->
+
+    <section id="workflow">
+
+      <div class="container">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            Workflow
+          </div>
+
+          <h2>
+            From EPUB to translated ebook.
+          </h2>
+
+        </div>
+
+
+        <div class="workflow">
+
+          <div class="step">
+
+            <div class="step-number">
+              STEP 01
+            </div>
+
+            <h3>Upload EPUB</h3>
+
+            <p>
+              Select the ebook you want to translate.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              STEP 02
+            </div>
+
+            <h3>Choose AI Model</h3>
+
+            <p>
+              Select an OpenRouter LLM and translation
+              languages.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              STEP 03
+            </div>
+
+            <h3>Translate</h3>
+
+            <p>
+              Preview the output and translate selected
+              chapters or the full book.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              STEP 04
+            </div>
+
+            <h3>Download EPUB</h3>
+
+            <p>
+              Export bilingual or translated-only EPUB
+              output.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TECHNOLOGY -->
+
+    <section id="technology">
+
+      <div class="container">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            Technology
+          </div>
+
+          <h2>
+            Built with simple, open technologies.
+          </h2>
+
+        </div>
+
+
+        <div class="tech-grid">
+
+          <span class="tech">Python</span>
+
+          <span class="tech">OpenRouter API</span>
+
+          <span class="tech">Large Language Models</span>
+
+          <span class="tech">EPUB</span>
+
+          <span class="tech">SQLite</span>
+
+          <span class="tech">Docker</span>
+
+          <span class="tech">Local Web App</span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <div class="container">
+
+      <div class="cta">
+
+        <div class="section-label">
+          Open Source
+        </div>
+
+        <h2>
+          Start translating EPUB books with AI.
+        </h2>
+
+        <p>
+          EPUB Translator is open source.
+          Explore the code, report issues or contribute
+          improvements on GitHub.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a
+            class="btn btn-primary"
+            href="https://github.com/haydentamch/epub-translator"
+            target="_blank"
+          >
+            Explore the Repository →
+          </a>
+
+          <a
+            class="btn btn-secondary"
+            href="https://github.com/haydentamch/epub-translator/issues"
+            target="_blank"
+          >
+            Report an Issue
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
 
   <footer>
-    EPUB Translator — AI Ebook Translation with OpenRouter
+
+    <div class="container footer-inner">
+
+      <div>
+        © 2026 EPUB Translator · Open-source AI ebook translation.
+      </div>
+
+      <div class="footer-links">
+
+        <a
+          href="https://github.com/haydentamch/epub-translator"
+        >
+          GitHub
+        </a>
+
+        <a
+          href="https://github.com/haydentamch/epub-translator/releases"
+        >
+          Releases
+        </a>
+
+        <a
+          href="https://github.com/haydentamch/epub-translator/blob/main/LICENSE"
+        >
+          License
+        </a>
+
+      </div>
+
+    </div>
+
   </footer>
+
+
+  <!-- Structured data for search engines -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "EPUB Translator",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows, macOS, Linux",
+    "description": "Open-source AI EPUB translator powered by OpenRouter LLMs for creating bilingual or translated-only EPUB ebooks.",
+    "url": "https://haydentamch.github.io/epub-translator/",
+    "codeRepository": "https://github.com/haydentamch/epub-translator",
+    "license": "https://github.com/haydentamch/epub-translator/blob/main/LICENSE"
+  }
+  </script>
 
 </body>
 </html>
