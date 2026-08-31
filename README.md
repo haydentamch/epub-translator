@@ -1,22 +1,43 @@
-# EPUB Translator
+# EPUB Translator — AI Ebook Translation with OpenRouter
 
-A local web app for translating EPUB books with OpenRouter models. It lets you upload an EPUB, choose translation settings, preview the first part of the book, translate selected chapters, pause and resume translation, export bilingual or translated-only EPUB files, and manage completed books from a History page.
+**AI-powered EPUB translator using OpenRouter LLMs. Translate EPUB ebooks into bilingual or translated-only EPUB files through a local web interface.**
+
+EPUB Translator is an open-source, local web application for translating `.epub` ebooks with AI models available through the OpenRouter API.
+
+Upload an EPUB file, choose your source and target languages, select an AI model, preview the translation, choose specific chapters, and export the finished book as either a **bilingual EPUB** or a **translated-only EPUB**.
+
+The application runs locally with Docker and includes translation progress tracking, pause/resume support, retry handling, translation history, and local SQLite storage.
+
+## Key Features
+
+- 🤖 **AI EPUB translation** using OpenRouter-compatible LLMs
+- 📚 Translate complete EPUB ebooks or selected chapters
+- 🌐 Configure source and target languages
+- 🔍 Preview translations before translating the full book
+- ⏯️ Start, pause, resume, and retry translation jobs
+- 📊 Track translation progress and elapsed time
+- 📖 Export **bilingual EPUB** files with original and translated text
+- 📘 Export **translated-only EPUB** files
+- 🗂️ Manage completed translations from a History page
+- 🔐 OpenRouter API keys are not stored in the database
+- 🐳 Easy local deployment with Docker
+- 💾 Local SQLite database and file storage
+
+## Why EPUB Translator?
+
+EPUB Translator provides a simple local interface for people who want to translate ebooks with modern AI language models without manually extracting chapters, sending text to an LLM, and rebuilding the EPUB file.
+
+It is useful for:
+
+- Translating foreign-language ebooks for personal reading
+- Creating bilingual EPUB books for language learning
+- Comparing original and AI-translated text
+- Testing different OpenRouter models for ebook translation
+- Translating selected chapters instead of an entire book
 
 ⚠ Disclaimer: The usage of this tool must comply with copyright laws. Ensure you have the necessary rights to translate and distribute EPUB content. The authors and developers of epub Translator are not responsible for any copyright violations arising from its use.
 
 <img width="1575" height="847" alt="main_page" src="https://github.com/user-attachments/assets/621690a4-91a7-48e6-82e8-9ebf03edc4a4" />
-
-## Features
-
-- Upload and parse EPUB files locally
-- Configure source language, target language, OpenRouter model, text direction, and bilingual layout
-- Select which chapters should be translated
-- Generate a preview before starting the full translation
-- Start, pause, resume, and retry translation jobs
-- Track translation progress and elapsed translation time
-- Export bilingual EPUB and translated-only EPUB
-- History page for completed translations with download and delete buttons
-- Local SQLite database storage
 
 ## Requirements
 
