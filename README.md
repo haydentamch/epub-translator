@@ -35,6 +35,20 @@ It is useful for:
 - Testing different OpenRouter models for ebook translation
 - Translating selected chapters instead of an entire book
 
+## Supported Translation Workflow
+
+EPUB Translator automates the AI ebook translation workflow:
+
+1. Upload an EPUB ebook.
+2. Parse the EPUB locally.
+3. Select the source and target languages.
+4. Choose an OpenRouter LLM.
+5. Select the chapters to translate.
+6. Preview the AI translation.
+7. Start the full EPUB translation.
+8. Pause or resume the translation when needed.
+9. Export a bilingual or translated-only EPUB file.
+
 ⚠ Disclaimer: The usage of this tool must comply with copyright laws. Ensure you have the necessary rights to translate and distribute EPUB content. The authors and developers of epub Translator are not responsible for any copyright violations arising from its use.
 
 <img width="1575" height="847" alt="main_page" src="https://github.com/user-attachments/assets/621690a4-91a7-48e6-82e8-9ebf03edc4a4" />
